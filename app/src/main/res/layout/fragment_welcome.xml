@@ -18,11 +18,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:width="280dp"
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/welcome_page_text"
+            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/purple_primary"
                 android:text="@string/welcome_button_register"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
                 android:layout_marginBottom="10dp"/>
@@ -65,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/purple_primary"
                 android:text="@string/welcome_button_login"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp" />
         </LinearLayout>
