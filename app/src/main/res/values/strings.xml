@@ -7,7 +7,7 @@
     <string name="welcome_button_register">Sign up</string>
     <string name="welcome_button_login">Log in</string>
 
-    <!-- Register page strings -->
+    <!-- Auth pages strings -->
     <string name="register_page_text">Create your account</string>
     <string name="register_username_label">Username</string>
     <string name="register_username_input">John</string>
@@ -16,8 +16,6 @@
     <string name="register_password_label">Password</string>
     <string name="register_password_input">Password</string>
     <string name="login_page_text">Login to account</string>
-
-    <!-- Login page strings -->
 
 
 </resources>

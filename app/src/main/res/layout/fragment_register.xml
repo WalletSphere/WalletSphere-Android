@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RegisterFragment">
+    tools:context=".presentation.register.RegisterFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,6 +73,7 @@
                 android:padding="10dp"
                 android:hint="@string/register_username_input"
                 android:textColorHint="@color/gray"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:autofillHints="username"/>
 
@@ -97,6 +98,7 @@
                 android:padding="10dp"
                 android:hint="@string/register_email_input"
                 android:textColorHint="@color/gray"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:autofillHints="emailAddress"/>
 
@@ -121,6 +123,7 @@
                 android:padding="10dp"
                 android:hint="@string/register_password_input"
                 android:textColorHint="@color/gray"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:autofillHints="password"/>
 

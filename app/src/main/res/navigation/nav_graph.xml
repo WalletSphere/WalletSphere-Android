@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.walletsphere.app.fragments.WelcomeFragment"
+        android:name="com.walletsphere.app.presentation.welcome.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
@@ -19,12 +19,25 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.walletsphere.app.fragments.LoginFragment"
+        android:name="com.walletsphere.app.presentation.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_portfolioFragment"
+            app:destination="@id/portfolioFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.walletsphere.app.fragments.RegisterFragment"
+        android:name="com.walletsphere.app.presentation.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_portfolioFragment"
+            app:destination="@id/portfolioFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/portfolioFragment"
+        android:name="com.walletsphere.app.presentation.portfolio.PortfolioFragment"
+        android:label="fragment_portfolio"
+        tools:layout="@layout/fragment_portfolio" />
 </navigation>

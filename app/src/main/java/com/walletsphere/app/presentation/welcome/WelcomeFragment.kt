@@ -1,4 +1,4 @@
-package com.walletsphere.app.fragments
+package com.walletsphere.app.presentation.welcome
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
