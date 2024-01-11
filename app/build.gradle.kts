@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.walletsphere.app"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "alpha v0.0.2"

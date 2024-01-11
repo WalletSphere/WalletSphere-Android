@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Portfolio Tokens"
+        android:text="@string/portfolio_tokens_title"
         android:textSize="30sp"
         android:textStyle="bold"/>
 
@@ -27,6 +27,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/portfolioHeaderText"
-        tools:listitem="@layout/item_token"/>
+        tools:listitem="@layout/item_token" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

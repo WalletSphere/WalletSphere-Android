@@ -14,4 +14,8 @@ class UserDataRepository(context: Context) {
     fun getAuthorizedUser(): AuthorizedUser? {
         return sharedPref.getAuthorizedUser()
     }
+
+    fun clearAuthorizedUser() {
+        sharedPref.clearAuthorizedUser()
+    }
 }

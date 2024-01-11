@@ -27,15 +27,16 @@ class PortfolioFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val list = listOf(
+        val list = arrayListOf(
             TokenUI("BTC", 3.432),
             TokenUI("USDT", 50.5),
             TokenUI("ETC", 14.0),
         )
 
         adapter = TokenAdapter(list)
-
         binding.recyclerView.adapter = adapter
+
+        list.add(TokenUI("FDSSD", 2323.3))
     }
 
 }

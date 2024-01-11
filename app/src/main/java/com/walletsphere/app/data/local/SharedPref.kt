@@ -28,4 +28,11 @@ class SharedPref(context: Context) {
         return AuthorizedUser(name, token)
     }
 
+    fun clearAuthorizedUser() {
+        editor.putString(authorizedUserNameKey, null)
+        editor.putString(authorizedUserTokenKey, null)
+
+        editor.commit()
+    }
+
 }

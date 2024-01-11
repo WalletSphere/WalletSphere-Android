@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.walletsphere.app.databinding.FragmentWelcomeBinding
 
 
 class WelcomeFragment : Fragment() {
     private lateinit var binding: FragmentWelcomeBinding
+    private lateinit var viewModel: WelcomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,6 +20,7 @@ class WelcomeFragment : Fragment() {
     ): View {
 
         binding = FragmentWelcomeBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this, WelcomeViewModelFactory(requireContext().applicationContext))[WelcomeViewModel::class.java]
         return binding.root
     }
 
@@ -36,6 +39,16 @@ class WelcomeFragment : Fragment() {
                 .navigate(
                     WelcomeFragmentDirections.actionWelcomeFragmentToLoginFragment()
                 )
+        }
+
+        viewModel.checkIfUserAuthorized()
+
+        viewModel.status.observe(viewLifecycleOwner) {
+            if (it) {
+                findNavController().navigate(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToPortfolioFragment()
+                )
+            }
         }
     }
 

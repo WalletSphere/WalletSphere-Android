@@ -17,5 +17,8 @@
     <string name="register_password_input">Password</string>
     <string name="login_page_text">Login to account</string>
 
+    <!-- Portfolio page strings -->
+    <string name="portfolio_tokens_title">Portfolio Tokens</string>
+
 
 </resources>

@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.walletsphere.app.databinding.FragmentRegisterBinding
-import com.walletsphere.app.presentation.login.LoginViewModelFactory
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
@@ -19,7 +19,7 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this, LoginViewModelFactory(requireContext().applicationContext))[RegisterViewModel::class.java]
+        viewModel = ViewModelProvider(this, RegisterViewModelFactory(requireContext().applicationContext))[RegisterViewModel::class.java]
 
         return binding.root
     }
@@ -43,6 +43,11 @@ class RegisterFragment : Fragment() {
         viewModel.status.observe(viewLifecycleOwner) {
             if (it.isSuccessful) {
                 Toast.makeText(requireContext(), "Successfully registered!!!", Toast.LENGTH_SHORT).show()
+
+                findNavController().navigate(
+                    RegisterFragmentDirections.actionRegisterFragmentToPortfolioFragment()
+                )
+
             } else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }

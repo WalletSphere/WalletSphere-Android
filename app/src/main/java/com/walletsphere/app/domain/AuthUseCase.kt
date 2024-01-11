@@ -8,8 +8,10 @@ import com.walletsphere.app.data.remote.Result
 import com.walletsphere.app.data.remote.models.requests.RegisterRequest
 import com.walletsphere.app.data.remote.models.requests.LoginRequest
 import com.walletsphere.app.domain.models.Status
+import com.walletsphere.app.domain.utils.JWTUtils
 import com.walletsphere.app.presentation.login.LoginUI
 import com.walletsphere.app.presentation.register.RegisterUI
+
 class AuthUseCase(context: Context) {
     private val walletSphereRepository = WalletSphereRepository
     private val userDataRepository = UserDataRepository(context)
@@ -64,5 +66,16 @@ class AuthUseCase(context: Context) {
             is Result.ErrorTimeOut -> Status(false, "Error Time Out Exception")
             else -> Status(false, "Unknown Exception")
         }
+    }
+
+    fun checkIfUserAuthorized(): Boolean {
+        val user = userDataRepository.getAuthorizedUser() ?: return false
+
+        if (JWTUtils.isTokenExpired(user.token)) {
+            userDataRepository.clearAuthorizedUser()
+            return false
+        }
+
+        return true
     }
 }

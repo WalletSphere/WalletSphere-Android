@@ -33,10 +33,6 @@ class LoginFragment : Fragment() {
                 binding.editTextUsername.text.toString(),
                 binding.editTextPassword.text.toString()
             )
-
-            findNavController().navigate( // TODO(Remove that)
-                LoginFragmentDirections.actionLoginFragmentToPortfolioFragment()
-            )
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
@@ -47,6 +43,11 @@ class LoginFragment : Fragment() {
         viewModel.status.observe(viewLifecycleOwner) {
             if (it.isSuccessful) {
                 Toast.makeText(requireContext(), "Successfully login!!!", Toast.LENGTH_SHORT).show()
+
+                findNavController().navigate(
+                    LoginFragmentDirections.actionLoginFragmentToPortfolioFragment()
+                )
+
             } else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
