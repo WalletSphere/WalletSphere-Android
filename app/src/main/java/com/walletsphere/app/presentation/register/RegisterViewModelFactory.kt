@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 
 class RegisterViewModelFactory(private val context: Context): ViewModelProvider.NewInstanceFactory() {
 
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return when(modelClass) {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T =
+        when(modelClass) {
             RegisterViewModel::class.java -> RegisterViewModel(context) as T
             else -> super.create(modelClass)
         }
-    }
 }

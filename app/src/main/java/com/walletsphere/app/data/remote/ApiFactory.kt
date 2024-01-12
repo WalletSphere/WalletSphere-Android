@@ -1,5 +1,6 @@
 package com.walletsphere.app.data.remote
 
+import com.walletsphere.app.data.remote.models.interfaces.WalletSphereApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -9,7 +10,7 @@ object ApiFactory {
     private const val BASE_URL = "http://10.0.2.2:8080/api/v1/"
 
     private val retrofit = createRetrofit()
-    val walletSphereApi: WalletSphereApiInterface = retrofit.create(WalletSphereApiInterface::class.java)
+    val walletSphereApi: WalletSphereApi = retrofit.create(WalletSphereApi::class.java)
 
     private fun createRetrofit(): Retrofit {
         val interceptor = HttpLoggingInterceptor()

@@ -15,10 +15,7 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var viewModel: LoginViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, LoginViewModelFactory(requireContext().applicationContext))[LoginViewModel::class.java]
 
@@ -29,10 +26,9 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginButton.setOnClickListener {
-            viewModel.loginUser(
-                binding.editTextUsername.text.toString(),
-                binding.editTextPassword.text.toString()
-            )
+            with(binding) {
+                viewModel.loginUser(editTextUsername.text.toString(), editTextPassword.text.toString())
+            }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
@@ -44,9 +40,7 @@ class LoginFragment : Fragment() {
             if (it.isSuccessful) {
                 Toast.makeText(requireContext(), "Successfully login!!!", Toast.LENGTH_SHORT).show()
 
-                findNavController().navigate(
-                    LoginFragmentDirections.actionLoginFragmentToPortfolioFragment()
-                )
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPortfolioFragment())
 
             } else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

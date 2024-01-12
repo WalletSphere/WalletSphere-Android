@@ -14,10 +14,7 @@ class PortfolioFragment : Fragment() {
     private lateinit var viewModel: PortfolioViewModel
     private lateinit var adapter: TokenAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPortfolioBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[PortfolioViewModel::class.java]
 

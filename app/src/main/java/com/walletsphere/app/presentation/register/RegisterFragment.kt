@@ -14,10 +14,7 @@ class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var viewModel: RegisterViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, RegisterViewModelFactory(requireContext().applicationContext))[RegisterViewModel::class.java]
 
@@ -28,11 +25,9 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.registerButton.setOnClickListener {
-            viewModel.registerUser(
-                binding.editTextUsername.text.toString(),
-                binding.editTextPassword.text.toString(),
-                binding.editTextEmail.text.toString()
-            )
+            with(binding) {
+                viewModel.registerUser(editTextUsername.text.toString(), editTextPassword.text.toString(), editTextEmail.text.toString())
+            }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
@@ -44,9 +39,7 @@ class RegisterFragment : Fragment() {
             if (it.isSuccessful) {
                 Toast.makeText(requireContext(), "Successfully registered!!!", Toast.LENGTH_SHORT).show()
 
-                findNavController().navigate(
-                    RegisterFragmentDirections.actionRegisterFragmentToPortfolioFragment()
-                )
+                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToPortfolioFragment())
 
             } else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

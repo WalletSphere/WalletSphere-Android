@@ -15,21 +15,15 @@ class RegisterViewModel(context: Context): ViewModel() {
     val isLoading = MutableLiveData<Boolean>()
     val status = MutableLiveData<Status>()
 
-    fun registerUser(
-        username: String,
-        password: String,
-        email: String
-    ) {
-        val userData = RegisterUI(username, password, email)
-
+    fun registerUser(username: String, password: String, email: String) =
         viewModelScope.launch {
             isLoading.postValue(true)
 
-            status.postValue(authUseCase.registerUser(userData))
+            status.postValue(
+                RegisterUI(username, password, email).let { authUseCase.registerUser(it) }
+            )
 
             isLoading.postValue(false)
         }
-    }
-
 
 }

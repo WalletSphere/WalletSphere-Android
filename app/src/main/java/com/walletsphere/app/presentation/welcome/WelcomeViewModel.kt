@@ -12,9 +12,7 @@ class WelcomeViewModel(context: Context): ViewModel() {
 
     val status = MutableLiveData<Boolean>()
 
-    fun checkIfUserAuthorized() {
-        viewModelScope.launch {
-            status.postValue(authUseCase.checkIfUserAuthorized())
-        }
+    fun checkIfUserAuthorized() = viewModelScope.launch {
+        status.postValue(authUseCase.checkIfUserAuthorized())
     }
 }

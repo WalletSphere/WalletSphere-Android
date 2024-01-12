@@ -1,4 +1,4 @@
-package com.walletsphere.app.data.remote
+package com.walletsphere.app.data.remote.models.interfaces
 
 import com.walletsphere.app.data.remote.models.requests.RegisterRequest
 import com.walletsphere.app.data.remote.models.responses.RegisterResponse
@@ -8,7 +8,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface WalletSphereApiInterface {
+interface WalletSphereApi {
 
     @POST("auth/register")
     suspend fun register(@Body model: RegisterRequest): Response<RegisterResponse>

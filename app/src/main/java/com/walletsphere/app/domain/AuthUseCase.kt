@@ -1,81 +1,65 @@
 package com.walletsphere.app.domain
 
 import android.content.Context
-import com.walletsphere.app.data.UserDataRepository
+import com.walletsphere.app.data.UserRepository
 import com.walletsphere.app.data.WalletSphereRepository
 import com.walletsphere.app.data.local.models.AuthorizedUser
 import com.walletsphere.app.data.remote.Result
+import com.walletsphere.app.data.remote.models.interfaces.AuthResponse
 import com.walletsphere.app.data.remote.models.requests.RegisterRequest
 import com.walletsphere.app.data.remote.models.requests.LoginRequest
+import com.walletsphere.app.data.remote.models.responses.LoginResponse
+import com.walletsphere.app.data.remote.models.responses.RegisterResponse
 import com.walletsphere.app.domain.models.Status
-import com.walletsphere.app.domain.utils.JWTUtils
+import com.walletsphere.app.domain.utils.JwtUtils
 import com.walletsphere.app.presentation.login.LoginUI
 import com.walletsphere.app.presentation.register.RegisterUI
 
 class AuthUseCase(context: Context) {
     private val walletSphereRepository = WalletSphereRepository
-    private val userDataRepository = UserDataRepository(context)
+    private val userRepository = UserRepository(context)
 
-    suspend fun registerUser(userData: RegisterUI): Status {
-        val request = RegisterRequest(
-            userData.username,
-            userData.password,
-            userData.email
-        )
+    suspend fun registerUser(userData: RegisterUI): Status =
+        RegisterRequest(userData.username, userData.password, userData.email)
+            .let { walletSphereRepository.register(it) }
+            .let { handleRegisterResponse(it) }
 
-        val result = walletSphereRepository.register(request)
-
-        return when(result) {
+    private fun handleRegisterResponse(result: Result<RegisterResponse>) =
+        when (result) {
             is Result.Success -> {
-                userDataRepository.setAuthorizedUser(
-                    AuthorizedUser(
-                        result.data.username,
-                        result.data.token
-                    )
-                )
-
-                Status(true)
+                handleSuccessAuthorization(result)
             }
 
             is Result.ErrorTimeOut -> Status(false, "Error Time Out Exception")
             else -> Status(false, "Unknown Exception")
         }
 
-    }
+    suspend fun loginUser(userData: LoginUI): Status =
+        LoginRequest(userData.username, userData.password)
+            .let { walletSphereRepository.login(it) }
+            .let { handleLoginResponse(it) }
 
-    suspend fun loginUser(userData: LoginUI): Status {
-        val request = LoginRequest(
-            userData.username,
-            userData.password
-        )
-
-        val result = walletSphereRepository.login(request)
-
-        return when(result) {
+    private fun handleLoginResponse(result: Result<LoginResponse>) =
+        when (result) {
             is Result.Success -> {
-                userDataRepository.setAuthorizedUser(
-                    AuthorizedUser(
-                        result.data.username,
-                        result.data.token
-                    )
-                )
-
-                Status(true)
+                handleSuccessAuthorization(result)
             }
 
             is Result.ErrorTimeOut -> Status(false, "Error Time Out Exception")
             else -> Status(false, "Unknown Exception")
         }
+
+    private fun handleSuccessAuthorization(result: Result.Success<AuthResponse>): Status {
+        userRepository.setAuthorizedUser(
+            AuthorizedUser(result.data.username, result.data.token)
+        )
+
+        return Status(true)
     }
 
-    fun checkIfUserAuthorized(): Boolean {
-        val user = userDataRepository.getAuthorizedUser() ?: return false
-
-        if (JWTUtils.isTokenExpired(user.token)) {
-            userDataRepository.clearAuthorizedUser()
-            return false
+    fun checkIfUserAuthorized(): Boolean = userRepository.getAuthorizedUser()?.let {
+        !JwtUtils.isTokenExpired(it.token).also { isExpired ->
+            if(isExpired) userRepository.clearAuthorizedUser()
         }
-
-        return true
-    }
+    } ?: false
 }

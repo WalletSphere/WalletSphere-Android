@@ -8,19 +8,14 @@ import com.walletsphere.app.databinding.ItemTokenBinding
 class TokenAdapter(private val tokensList: List<TokenUI>):
     RecyclerView.Adapter<TokenAdapter.TokenViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TokenViewHolder {
-        val itemTokenBinding = ItemTokenBinding.inflate(LayoutInflater.from(parent.context))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TokenViewHolder =
+        TokenViewHolder(ItemTokenBinding.inflate(LayoutInflater.from(parent.context)))
 
-        return TokenViewHolder(itemTokenBinding)
-    }
-
-    override fun onBindViewHolder(holder: TokenViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TokenViewHolder, position: Int) =
         holder.bind(tokensList[position])
-    }
 
-    override fun getItemCount(): Int {
-        return tokensList.size
-    }
+
+    override fun getItemCount(): Int = tokensList.size
 
     class TokenViewHolder(private val tokenBinding: ItemTokenBinding):
         RecyclerView.ViewHolder(tokenBinding.root) {

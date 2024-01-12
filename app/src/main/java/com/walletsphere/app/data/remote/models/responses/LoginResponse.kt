@@ -1,11 +1,13 @@
 package com.walletsphere.app.data.remote.models.responses
 
 import com.google.gson.annotations.SerializedName
+import com.walletsphere.app.data.remote.models.interfaces.AuthResponse
 
 data class LoginResponse(
     @SerializedName("username")
-    val username: String,
+    override val username: String,
 
     @SerializedName("jwt")
-    val token: String,
-)
+    override val token: String,
+
+): AuthResponse

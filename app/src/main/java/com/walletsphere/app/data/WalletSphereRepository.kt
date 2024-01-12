@@ -14,34 +14,30 @@ import java.net.UnknownHostException
 object WalletSphereRepository {
     private val api = ApiFactory.walletSphereApi
 
-    suspend fun register(request: RegisterRequest): Result<RegisterResponse> {
-        return safetyCall { api.register(request) }
-    }
+    suspend fun register(request: RegisterRequest): Result<RegisterResponse> = safetyCall { api.register(request) }
 
-    suspend fun login(request: LoginRequest): Result<LoginResponse> {
-        return safetyCall { api.login(request) }
-    }
+    suspend fun login(request: LoginRequest): Result<LoginResponse> = safetyCall { api.login(request) }
 
-    private suspend fun <T> safetyCall(call: suspend () -> Response<T>): Result<T> {
+    private suspend fun <T> safetyCall(call: suspend () -> Response<T>): Result<T> =
         try {
-            val result = call.invoke()
-
-            val response = if (result.isSuccessful) {
-                Result.Success(result.body()!!)
-
-            } else {
-                Result.Error(result.code(), result.toString())
-            }
-
-            return response
+            checkResult(call)
 
         } catch (e: Exception) {
-            return when(e) {
-                is SocketTimeoutException -> Result.ErrorTimeOut
-                is UnknownHostException -> Result.ErrorUnknown
-
-                else -> Result.ErrorUnknown
-            }
+            handleError(e)
         }
-    }
+
+    private suspend fun <T> checkResult(call: suspend () -> Response<T>) =
+        call.invoke().let {
+            if (it.isSuccessful) Result.Success(it.body()!!) else Result.Error(it.code(), it.toString())
+        }
+
+    private fun handleError(e: Exception) =
+        when (e) {
+            is SocketTimeoutException -> Result.ErrorTimeOut
+            is UnknownHostException -> Result.ErrorUnknown
+
+            else -> Result.ErrorUnknown
+        }
+
+
 }

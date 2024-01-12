@@ -14,15 +14,14 @@ class LoginViewModel(context: Context): ViewModel() {
     val isLoading = MutableLiveData<Boolean>()
     val status = MutableLiveData<Status>()
 
-    fun loginUser(username: String, password: String) {
-        val userData = LoginUI(username, password)
-
+    fun loginUser(username: String, password: String) =
         viewModelScope.launch {
             isLoading.postValue(true)
 
-            status.postValue(authUseCase.loginUser(userData))
+            status.postValue(
+                LoginUI(username, password).let { authUseCase.loginUser(it) }
+            )
 
             isLoading.postValue(false)
         }
-    }
 }
