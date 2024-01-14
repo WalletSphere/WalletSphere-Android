@@ -20,12 +20,13 @@ object ApiFactory {
             .addInterceptor(interceptor)
             .build()
 
-        return Retrofit.Builder()
+        return buildRetrofit(client)
+    }
+
+    private fun buildRetrofit(client: OkHttpClient): Retrofit =
+        Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-
 }

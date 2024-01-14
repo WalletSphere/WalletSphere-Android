@@ -12,10 +12,10 @@ class SharedPref(context: Context) {
     private val sharedPreferences = context.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
     private val editor = sharedPreferences.edit()
 
-    fun setAuthorizedUser(user: AuthorizedUser) =
+    fun setAuthorizedUser(user: AuthorizedUser?) =
         with(editor) {
-            putString(authorizedUserNameKey, user.name)
-            putString(authorizedUserTokenKey, user.token)
+            putString(authorizedUserNameKey, user?.name)
+            putString(authorizedUserTokenKey, user?.token)
 
             commit()
         }
@@ -27,12 +27,6 @@ class SharedPref(context: Context) {
         return if(name != null && token != null) AuthorizedUser(name, token) else null
     }
 
-    fun clearAuthorizedUser() =
-        with(editor) {
-            putString(authorizedUserNameKey, null)
-            putString(authorizedUserTokenKey, null)
-
-            commit()
-        }
+    fun clearAuthorizedUser() = setAuthorizedUser(null)
 
 }

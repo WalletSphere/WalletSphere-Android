@@ -21,8 +21,7 @@ class AuthUseCase(context: Context) {
 
     suspend fun registerUser(userData: RegisterUI): Status =
         RegisterRequest(userData.username, userData.password, userData.email)
-            .let { walletSphereRepository.register(it) }
-            .let { handleRegisterResponse(it) }
+            .let { handleRegisterResponse(walletSphereRepository.register(it)) }
 
     private fun handleRegisterResponse(result: Result<RegisterResponse>) =
         when (result) {
@@ -36,8 +35,7 @@ class AuthUseCase(context: Context) {
 
     suspend fun loginUser(userData: LoginUI): Status =
         LoginRequest(userData.username, userData.password)
-            .let { walletSphereRepository.login(it) }
-            .let { handleLoginResponse(it) }
+            .let { handleLoginResponse(walletSphereRepository.login(it)) }
 
     private fun handleLoginResponse(result: Result<LoginResponse>) =
         when (result) {
@@ -49,13 +47,10 @@ class AuthUseCase(context: Context) {
             else -> Status(false, "Unknown Exception")
         }
 
-    private fun handleSuccessAuthorization(result: Result.Success<AuthResponse>): Status {
+    private fun handleSuccessAuthorization(result: Result.Success<AuthResponse>): Status =
         userRepository.setAuthorizedUser(
             AuthorizedUser(result.data.username, result.data.token)
-        )
-
-        return Status(true)
-    }
+        ).let { return Status(true) }
 
     fun checkIfUserAuthorized(): Boolean = userRepository.getAuthorizedUser()?.let {
         !JwtUtils.isTokenExpired(it.token).also { isExpired ->
