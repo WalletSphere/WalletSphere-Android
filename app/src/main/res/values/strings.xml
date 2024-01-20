@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Wallet Sphere</string>
+
+    <!-- Welcome page strings -->
+    <string name="logo_desc">Wallet Sphere Logo</string>
+    <string name="welcome_page_text">Welcome to WalletSphere</string>
+    <string name="welcome_button_register">Sign up</string>
+    <string name="welcome_button_login">Log in</string>
+
+    <!-- Auth pages strings -->
+    <string name="register_page_text">Create your account</string>
+    <string name="register_username_label">Username</string>
+    <string name="register_username_input">John</string>
+    <string name="register_email_label">Email address</string>
+    <string name="register_email_input">John@testmail.com</string>
+    <string name="register_password_label">Password</string>
+    <string name="register_password_input">Password</string>
+    <string name="login_page_text">Login to account</string>
+
+    <!-- Portfolio page strings -->
+    <string name="portfolio_tokens_title">Portfolio Tokens</string>
+
+
 </resources>
