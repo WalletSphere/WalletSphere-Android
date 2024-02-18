@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.walletsphere.app.databinding.ItemTokenBinding
 
-class TokenAdapter(private val tokensList: List<TokenUI>):
+class TokenAdapter:
     RecyclerView.Adapter<TokenAdapter.TokenViewHolder>() {
+
+    private val tokensList = ArrayList<TokenUI>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TokenViewHolder =
         TokenViewHolder(ItemTokenBinding.inflate(LayoutInflater.from(parent.context)))
@@ -14,6 +16,12 @@ class TokenAdapter(private val tokensList: List<TokenUI>):
     override fun onBindViewHolder(holder: TokenViewHolder, position: Int) =
         holder.bind(tokensList[position])
 
+    fun updateTokens(newTokens: List<TokenUI>) {
+        tokensList.clear()
+        tokensList.addAll(newTokens)
+        tokensList.sortByDescending{ it.count }
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int = tokensList.size
 
@@ -22,7 +30,7 @@ class TokenAdapter(private val tokensList: List<TokenUI>):
 
         fun bind(model: TokenUI) {
             tokenBinding.tokenName.text = model.symbol
-            tokenBinding.tokenAmount.text = model.count.toString()
+            tokenBinding.tokenAmount.text = model.count
         }
 
     }

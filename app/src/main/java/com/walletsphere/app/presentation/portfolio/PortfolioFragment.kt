@@ -16,7 +16,7 @@ class PortfolioFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPortfolioBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[PortfolioViewModel::class.java]
+        viewModel = ViewModelProvider(this, PortfolioViewModelFactory(requireContext().applicationContext))[PortfolioViewModel::class.java]
 
         return binding.root
     }
@@ -24,16 +24,15 @@ class PortfolioFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val list = arrayListOf(
-            TokenUI("BTC", 3.432),
-            TokenUI("USDT", 50.5),
-            TokenUI("ETC", 14.0),
-        )
+        viewModel.getAllBalances()
 
-        adapter = TokenAdapter(list)
+        adapter = TokenAdapter()
         binding.recyclerView.adapter = adapter
 
-        list.add(TokenUI("FDSSD", 2323.3))
+        viewModel.tokensList.observe(viewLifecycleOwner) {
+            adapter.updateTokens(it)
+        }
+
     }
 
 }
